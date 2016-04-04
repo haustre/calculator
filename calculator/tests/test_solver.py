@@ -21,11 +21,13 @@ class TestMathematicalOperations(TestCase):
 
     def test_basic_operations(self):
         """ Test + - */ """
+        self.assertEqual(self.solver.calculate("3*5"), 15)
+        self.assertEqual(self.solver.calculate("3/5"), 0.6)
         self.assertEqual(self.solver.calculate("3+5"), 8)
         self.assertEqual(self.solver.calculate("5-3"), 2)
         self.assertEqual(self.solver.calculate("3-5"), -2)
-        self.assertEqual(self.solver.calculate("3*5"), 15)
-        self.assertEqual(self.solver.calculate("3/5"), 0.6)
+        self.assertEqual(self.solver.calculate("3*-7"), -21)
+        self.assertEqual(self.solver.calculate("3/-4"), -0.75)
 
     def test_multiple_basic_operations(self):
         """ Test multiple operations in one string"""
@@ -35,7 +37,7 @@ class TestMathematicalOperations(TestCase):
 
     def test_divide_0(self):
         """ Test divide by 0 exception"""
-        self.assertRaises(ZeroDivisionError, self.solver.calculate("3/0"))
+        self.assertRaises(ZeroDivisionError, lambda: self.solver.calculate("3/0"))
 
     def test_parentheses(self):
         """ Test calculation with single parentheses"""
@@ -50,4 +52,9 @@ class TestMathematicalOperations(TestCase):
     def test_with_spaces(self):
         """ Test string whit white spaces"""
         self.assertEqual(self.solver.calculate("(3 +5 ) *(7 -11 ) "), -32)
+
+    def test_wrong_input(self):
+        """ Test return value for false input"""
+        self.assertEqual(self.solver.calculate("(3 +5 ) **(7 -11 ) "), False)
+        self.assertEqual(self.solver.calculate("(3 +5 ) *(7 -11 ) a"), False)
 
