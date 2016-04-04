@@ -7,7 +7,7 @@ __license__ = "GPLv3"
 
 
 from unittest import TestCase
-from calculator.solver import Solver
+from solver import Solver
 
 
 class TestMathematicalOperations(TestCase):
@@ -34,10 +34,11 @@ class TestMathematicalOperations(TestCase):
         self.assertEqual(self.solver.calculate("3+5+7"), 15)
         self.assertEqual(self.solver.calculate("3+5*7"), 38)
         self.assertAlmostEqual(self.solver.calculate("3+5/7"), 3.714285714)
+        self.assertAlmostEqual(self.solver.calculate("10/9+1"), 2.111111111)
 
     def test_divide_0(self):
         """ Test divide by 0 exception"""
-        self.assertRaises(ZeroDivisionError, lambda: self.solver.calculate("3/0"))
+        self.assertEqual(self.solver.calculate("3/0"), 'zero division')
 
     def test_parentheses(self):
         """ Test calculation with single parentheses"""
@@ -55,6 +56,6 @@ class TestMathematicalOperations(TestCase):
 
     def test_wrong_input(self):
         """ Test return value for false input"""
-        self.assertEqual(self.solver.calculate("(3 +5 ) **(7 -11 ) "), False)
-        self.assertEqual(self.solver.calculate("(3 +5 ) *(7 -11 ) a"), False)
+        self.assertEqual(self.solver.calculate("(3 +5 ) **(7 -11 ) "), 'wrong format')
+        self.assertEqual(self.solver.calculate("(3 +5 ) *(7 -11 ) a"), 'wrong format')
 
